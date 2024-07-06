@@ -72,11 +72,10 @@ Seems like this is the real destination instead of the google ip address. Let’
 
 ![Figure16](./imgs/img22.png)
 
-And that looks like our flag encoded in base64. Let’s open tshark, which is the terminal version of wireshark. 
+And that looks like our flag encoded in base64. At this point, we could just throw it into cyberchef and be done with it but yeah...Let’s open tshark, which is the terminal version of wireshark. 
 
 ```sh
-
-tshark -nr shark2.pcapng
+$ tshark -nr shark2.pcapng
 
 #‘-n’ option would tell tshark to use the numeric format for IP addresses and port number
 
@@ -86,21 +85,79 @@ tshark -nr shark2.pcapng
 In this case we are going to use all the filters we applied earlier in the tshark syntax by adding “-Y” in front and enclosing the filters with quotes.
 
 ```sh
+$ tshark -nr shark2.pcapng -Y "(((dns) && (dns.flags.response == 0)) && !(dns.qry.name contains "amazonaws") &5 !(dns.qry.name contains "windomain")) && (ip.dst == 18.217.1.57)*
+```
 
-tshark -nr shark2.pcapng -Y "(((dns) && (dns.flags.response == 0)) && !(dns.qry.name contains "amazonaws") &5 !(dns.qry.name contains "windomain")) && (ip.dst == 18.217.1.57)*
 
-
-# Output
+```sh
+#Output
 
 1633      9.334169 192.168.38.104 - 18.217.1.57 DNS 93 Standard query 0xdf26 A cGljbONU.reddshrimpandherring.com
 2042      11.870534 192.168.38.104 - 18.217.1.57 DNS 93 Standard query 0x3a38 A RntkbnNf.reddshrimpandherring.com
 2444      14.503146 192.168.38.104 - 18.217.1.57 DNS 93 Standard query 0x531d A M3hmMWxf.reddshrimpandherring.com
 3140      16.404809 192.168.38.104 - 18.217.1.57 DNS 93 Standard query 0x99dd A ZnR3X2Rl.reddshrimpandherring.com
 3429      18.239530 192.168.38.104 - 18.217.1.57 DNS 93 Standard query 0x16f6 A YWRiZWm.reddshrimpandherring.com
-2969      20.266171 192.168.38.104 - 18.217.1.57 DNS 89 Standard query 0xbe68 A fQ ==. reddshrimpandherring.com
-4361      22.481648 192.168.38.104 - 18.217.1.57 DNS 89 Standard query 0xa748 A fQ ==. reddshrimpandherring.com
-
+2969      20.266171 192.168.38.104 - 18.217.1.57 DNS 89 Standard query 0xbe68 A fQ==.reddshrimpandherring.com
+4361      22.481648 192.168.38.104 - 18.217.1.57 DNS 89 Standard query 0xa748 A fQ==.reddshrimpandherring.com
 ```
+
+
+Let’s get rid of the rest of the columns by using “awk”. We leave the options default for awk because it recognises the columns by spaces/whitespace
+
+```sh
+$ tshark -nr shark2.pcapng -Y "(((dns) && (dns.flags.response == 0)) && !(dns.qry.name contains "amazonaws") && !(dns.qry.name contains "windomain")) && (ip.dst == 18.217.1.57)" | awk "{ print $12 }'
+```
+
+Note: $12 (12 is the n'th column)
+
+```sh
+#Output
+
+cGljbONU.reddshrimpandherring.com
+RntkbnNf.reddshrimpandherring.com
+M3hmMWxf.reddshrimpandherring.com
+ZnR3X2Rl.reddshrimpandherring.com
+YWRiZWVm.reddshrimpandherring.com
+fQ==.reddshrimpandherring.com
+fQ==.reddshrimpandherring.com
+```
+
+Now let’s get rid of the other columns by specifying the “.” Using “-F” option
+
+```sh
+$ tshark -nr shark2.pcapng -Y "(((dns) && (dns.flags.response == 0)) && !(dns.qry.name contains "amazonaws") && !(dns.qry.name contains "windomain")) 66 (ip.dst == 18.217.1.57)" | awk "{ print $12 }' | awk -F "." '{ print $1 }'
+```
+
+```sh
+#Output
+
+cGljbONU
+RntkbnNf
+M3hmMwxf
+ZnR3X2RL
+YWRLZWVm
+fQ==
+fQ==
+```
+
+After that, we delete the newline by using translate or “tr"
+
+```sh
+$ tshark -nr shark2.pcapng -Y "(((dns) && (dns.flags.response == 0)) && !(dns.qry.name contains "amazonaws") 6& !(dns.qry.name contains "windomain")) 65 (ip.dst == 18.217.1.57)" | awk '{ print $12 }' | awk -F "." '{ print $1 }' | uniq | tr -d '\n' 
+```
+
+Note: uniq is used to remove duplicate outputs (eg: fQ==)
+
+And we got the flag in base64. Just head to a online decoder and submit :)
+
+```sh
+cGljb0NURntkbnNfM3hmMWxfZnR3X2RlYWRiZWVmfQ==
+```
+
+![Figure17](./imgs/img23.png)
+
+
+The flag is: `picoCTF{dns_3xf1l_ftw_deadbeef}`
 
 
 
