@@ -1,11 +1,11 @@
 # mfkrypt's Writeups
 
-This Github repo will be my place to track my performance
+This repo will be the place to track my ctf performance although I am lazy to do writeups I will try do it to the best of my ability in my spare time :D
+
+Connect with me: [LinkedIn](https://www.linkedin.com/in/ammar-nawfal-a81456286/)
 
 
 ## picoCTF
-Okay so I wll be testing my first writeup here 
+Okay so I will be tracking my picoCTF writeups here 
 
-hope everything looks good hehe :P
-
-Checkout my Profile: [LinkedIn](https://www.linkedin.com/in/ammar-nawfal-a81456286/)
+There will be more to come (soon)
