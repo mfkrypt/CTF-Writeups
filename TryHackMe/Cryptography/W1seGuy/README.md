@@ -134,9 +134,7 @@ res = ''.join(random.choices(string.ascii_letters + string.digits, k=5))
     key = str(res)
 ```
 
-We know that the options are only Upper Capital letters, Lower capital letters and Numbers. So we can try and brute force the last character one
-
-by one until we get a suitable match
+We know that the options are only Upper Capital letters, Lower capital letters and Numbers. So we can try and brute force the last character one by one until we get a suitable match
 
 ## Question 1
 
