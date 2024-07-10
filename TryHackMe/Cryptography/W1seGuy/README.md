@@ -123,7 +123,7 @@ As we can see, these the first 4 characters of the encrypted key. Now we need to
 
 ![Figure6](./imgs/img7.png)
 
-This might seem a bit daunting at first but refer to the initial ![sketch](./imgs/img2.jpg) I did earlier for better readibility.
+This might seem a bit daunting at first but refer to the initial sketch I did earlier for better readibility.
 
 i also changed the XOR standard to UTF-8 to view non-printable characters.
 
