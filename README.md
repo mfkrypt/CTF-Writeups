@@ -6,6 +6,6 @@ Connect with me: [LinkedIn](https://www.linkedin.com/in/ammar-nawfal-a81456286/)
 
 
 ## picoCTF
-Okay so I will be tracking my picoCTF writeups here 
 
-There will be more to come (soon)
+[Forensics](https://github.com/mfkrypt/CTF-Writeups/tree/main/picoCTF#forensics)
+
