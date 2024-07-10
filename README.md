@@ -12,5 +12,5 @@ Connect with me: [LinkedIn](https://www.linkedin.com/in/ammar-nawfal-a81456286/)
 
 ## TryHackMe
 
-[Cryptography]
+[Cryptography](https://github.com/mfkrypt/CTF-Writeups/tree/main/TryHackMe#cryptography)
 

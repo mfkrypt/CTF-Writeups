@@ -6,4 +6,4 @@ These are the challenges that I solved in the respective categories
 
 ### Difficulty: Easy
 
-- [W1seGuy]
+- [W1seGuy](./Cryptography/W1seGuy/)
